@@ -4,16 +4,18 @@ const cors = require("cors");
 const morgan = require("morgan");
 const app = express();
 const port = 3000;
-const Password = require("./models/password.js");
-
+const Password = require("./src/models/password.js");
+require("dotenv").config();
 mongoose
-  .connect("mongodb://localhost:27017/passforge")
+  .connect(process.env.MONGO_URL)
+  // .connect("mongodb://localhost:27017/passforge")
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error", err));
 
 app.use(
   cors({
-    origin: "http://localhost:4200",
+    origin: process.env.CORS_ORIGIN,
+    // origin: "http://localhost:4200",
   })
 );
 app.use(express.json());
